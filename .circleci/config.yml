@@ -1,0 +1,39 @@
+version: 2.1
+
+executors:
+  node-executor:
+    docker:
+      - image: cimg/node:14
+
+jobs:
+  release:
+    docker:
+      - image: cimg/node:14
+    steps:
+      - checkout
+      - run: GH_TOKEN=$GH_TOKEN npx semantic-release
+
+  build:
+    docker:
+      - image: cimg/base:2020.01
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run: ./build.sh
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - release:
+          filters:
+            branches:
+              only:
+                - main
+      - build:
+          filters:
+            branches:
+              only:
+                - main
+          requires:
+            - release
