@@ -1,6 +1,6 @@
 {
   "name": "apisuite-be-jobs",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "APISuite backend cron jobs",
   "author": "APISuite",
   "license": "MPL-2",
