@@ -21,11 +21,13 @@ workflows:
   build:
     jobs:
       - release:
+          context: docker
           filters:
             branches:
               only:
                 - main
       - build:
+          context: docker
           filters:
             branches:
               only:
