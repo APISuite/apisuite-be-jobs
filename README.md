@@ -23,3 +23,7 @@ APISUITE_JOBS_ACTV_TTL=12
 APISUITE_JOBS_RECOV_CRON=*/30+*+*+*+*
 APISUITE_JOBS_RECOV_TTL=2
 ```
+
+## Development
+
+- Commits should follow [conventional commits](https://www.conventionalcommits.org) spec
