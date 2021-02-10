@@ -1,0 +1,15 @@
+{
+  "name": "apisuite-be-jobs",
+  "version": "1.0.0",
+  "description": "APISuite backend cron jobs",
+  "author": "APISuite",
+  "license": "MPL-2",
+  "release": {
+    "branches": ["main"],
+    "plugins": {
+      "@semantic-release/changelog": {
+        "changelogFile": "CHANGELOG.md"
+      }
+    }
+  }
+}
