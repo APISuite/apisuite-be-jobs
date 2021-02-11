@@ -24,6 +24,18 @@ APISUITE_JOBS_RECOV_CRON=*/30+*+*+*+*
 APISUITE_JOBS_RECOV_TTL=2
 ```
 
+## Installing
+
+Docker images are available in our [DockerHub](https://hub.docker.com/repository/docker/cloudokihub/apisuite-be-jobs).
+
+Every new image is tagged with:
+- commit hash
+- latest
+- semantic version from `package.json`
+
+Depending on your goals, you could use a fixed version like `1.0.4` or 
+`latest` to simply get the most recent version every time you pull the image.
+
 ## Development
 
 - Commits should follow [conventional commits](https://www.conventionalcommits.org) spec
