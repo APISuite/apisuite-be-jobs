@@ -26,7 +26,7 @@ APISUITE_JOBS_RECOV_TTL=2
 
 ## Installing
 
-Docker images are available in our [DockerHub](https://hub.docker.com/repository/docker/cloudokihub/apisuite-be-jobs).
+Docker images are available in our [DockerHub](https://hub.docker.com/r/cloudokihub/apisuite-be-jobs).
 
 Every new image is tagged with:
 - commit hash
