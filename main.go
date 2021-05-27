@@ -42,6 +42,9 @@ func execute(config *Config) {
 		db: db,
 		ttl: config.PasswordRecoveryTTL,
 	}))
+	c.AddFunc(config.PasswordRecoveryCron, setupRefreshTokenCleaner(&cleanerConfig{
+		db: db,
+	}))
 	c.Start()
 
 	select {} // block it
@@ -50,9 +53,9 @@ func execute(config *Config) {
 func setupConfig() *Config {
 	return &Config{
 		DatabaseURI:           getEnv("APISUITE_JOBS_DB", "postgres://apisuite:m00se@localhost:5432/apisuite?sslmode=disable"),
-		ActivationCleanerCron: getEnv("APISUITE_JOBS_ACTV_CRON", "*/30 * * * *"),
+		ActivationCleanerCron: getEnv("APISUITE_JOBS_ACTV_CRON", "* * * * *"),
 		ActivationCleanerTTL:  getEnv("APISUITE_JOBS_ACTV_TTL", "12"),
-		PasswordRecoveryCron:  getEnv("APISUITE_JOBS_RECOV_CRON", "*/30 * * * *"),
+		PasswordRecoveryCron:  getEnv("APISUITE_JOBS_RECOV_CRON", "* * * * *"),
 		PasswordRecoveryTTL:   getEnv("APISUITE_JOBS_RECOV_TTL", "2"),
 	}
 }
@@ -116,5 +119,25 @@ func setupRecoveryCleaner(conf *cleanerConfig) func() {
 		log.Println("[RECOVERY] deleted rows: ", count)
 
 		log.Println("[RECOVERY] finished job")
+	}
+}
+
+func setupRefreshTokenCleaner(conf *cleanerConfig) func() {
+	return func() {
+		log.Println("[REFRESH] starting job")
+
+		stmt := `DELETE FROM refresh_tokens WHERE expires_at < now()`
+		res, err := conf.db.Exec(stmt)
+		if err != nil {
+			log.Println("[REFRESH] error: ", err)
+		}
+
+		count, err := res.RowsAffected()
+		if err != nil {
+			log.Println("[REFRESH] error: ", err)
+		}
+		log.Println("[REFRESH] deleted rows: ", count)
+
+		log.Println("[REFRESH] finished job")
 	}
 }
